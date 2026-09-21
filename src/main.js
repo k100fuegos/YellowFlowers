@@ -1,3 +1,4 @@
+import './style.css';
 import { Scene3D } from './components/Scene3D.js';
 import { Bouquet } from './components/Bouquet.js';
 import { ParticleSystem } from './components/Particles.js';
