@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Ramo de Flores Amarillas 3D 🌻✨ - Para Alguien Especial</title>
+
+  <!-- Meta tags SEO / Social Media -->
+  <meta name="description" content="Una experiencia 3D interactiva de flores amarillas con brillitos, música y carta dedicatoria para regalar.">
+  <meta name="theme-color" content="#0a0814">
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌻</text></svg>">
+
+  <!-- Import Map para cargar Three.js, GSAP y Canvas-Confetti vía CDN cuando se ejecute sin Node local -->
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+        "gsap": "https://cdn.jsdelivr.net/npm/gsap@3.12.5/index.js",
+        "canvas-confetti": "https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/+esm"
+      }
+    }
+  </script>
+
+</head>
+<body>
+
+  <!-- Canvas Three.js 3D -->
+  <canvas id="webgl-canvas"></canvas>
+
+  <!-- Canvas 2D Ondas en el Fondo -->
+  <canvas id="ripple-canvas"></canvas>
+
+  <!-- Interfaz de Usuario Overlay (Glassmorphism UI) -->
+  <div class="ui-overlay">
+    
+    <!-- Encabezado Superior -->
+    <header class="header-badge" id="header-badge">
+      <span class="header-icon">🌻</span>
+      <h1>Flores Amarillas 3D</h1>
+      <span class="header-icon">✨</span>
+    </header>
+
+    <!-- Pista de Interacción -->
+    <div class="interaction-hint">
+      👉 Gira 360°, acerca o toca cualquier flor ✨
+    </div>
+
+    <!-- Barra de Herramientas Inferior -->
+    <nav class="toolbar" aria-label="Controles interactivos">
+      <button class="btn-action" id="btn-sparkles" title="Lluvia de brillitos mágicos">
+        <span class="btn-icon">✨</span>
+        <span class="btn-label">Brillitos</span>
+      </button>
+
+      <button class="btn-action" id="btn-card" title="Abrir carta dedicatoria">
+        <span class="btn-icon">💌</span>
+        <span class="btn-label">Carta</span>
+      </button>
+
+      <button class="btn-action" id="btn-music" title="Música ambiental de fondo">
+        <span class="btn-icon">🎵</span>
+        <span class="btn-label">Música</span>
+      </button>
+
+      <button class="btn-action active" id="btn-sfx" title="Efectos de sonido">
+        <span class="btn-icon">🔊</span>
+        <span class="btn-label">Sonido</span>
+      </button>
+    </nav>
+
+  </div>
+
+  <!-- Modal Carta Dedicatoria (Glassmorphism Modal) -->
+  <div class="modal-backdrop" id="card-modal" role="dialog" aria-modal="true">
+    <div class="glass-card">
+      <button class="btn-close" id="btn-close-card" aria-label="Cerrar carta">&times;</button>
+      
+      <div class="card-header">
+        <div class="card-subtitle" id="card-subtitle">Un detalle especial</div>
+        <h2 class="card-title" id="card-title">Flores Amarillas Para Ti 🌻</h2>
+      </div>
+
+      <div class="card-body">
+        <p class="card-message" id="card-message">
+          Cargando mensaje...
+        </p>
+      </div>
+
+      <div class="card-footer">
+        <div>
+          <div class="card-signature" id="card-signature">Con todo mi cariño,</div>
+          <div class="card-sender" id="card-sender">Tu Nombre</div>
+        </div>
+        <div class="card-date" id="card-date">21 de Septiembre</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Script Principal -->
+  <script type="module" src="./src/main.js"></script>
+</body>
+</html>
