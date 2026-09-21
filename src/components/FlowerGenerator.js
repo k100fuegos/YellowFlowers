@@ -27,7 +27,7 @@ class TextureFactory {
 
       ctx.beginPath();
       ctx.arc(x, y, 3.5, 0, Math.PI * 2);
-      ctx.fillStyle = i < 150 ? '#26150b' : i < 400 ? '#5a381e' : '#eab308';
+      ctx.fillStyle = i < 150 ? '#26150b' : i < 400 ? '#5a381e' : '#f59e0b';
       ctx.fill();
     }
 
@@ -37,7 +37,7 @@ class TextureFactory {
     return texture;
   }
 
-  static createPetalGradientTexture(baseHex = '#fbbf24', tipHex = '#fef08a', darkHex = '#d97706') {
+  static createPetalGradientTexture(baseHex = '#f59e0b', tipHex = '#fef08a', darkHex = '#d97706') {
     const canvas = document.createElement('canvas');
     canvas.width = 128;
     canvas.height = 512;
@@ -45,14 +45,14 @@ class TextureFactory {
 
     const grad = ctx.createLinearGradient(0, 512, 0, 0);
     grad.addColorStop(0, darkHex);
-    grad.addColorStop(0.3, baseHex);
+    grad.addColorStop(0.35, baseHex);
     grad.addColorStop(1, tipHex);
 
     ctx.fillStyle = grad;
     ctx.fillRect(0, 0, 128, 512);
 
-    // Vetita sutil
-    ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)';
+    // Vetita suave
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
     ctx.lineWidth = 2;
     for (let i = 20; i < 110; i += 20) {
       ctx.beginPath();
@@ -103,9 +103,9 @@ class TextureFactory {
 
 // Inicialización de texturas compartidas
 const sunflowerCenterTex = TextureFactory.createSunflowerCenterTexture();
-const sunflowerPetalTex = TextureFactory.createPetalGradientTexture('#f59e0b', '#fef08a', '#b45309');
+const sunflowerPetalTex = TextureFactory.createPetalGradientTexture('#f59e0b', '#fff066', '#d97706');
 const rosePetalTex = TextureFactory.createPetalGradientTexture('#eab308', '#fef9c3', '#ca8a04');
-const tulipPetalTex = TextureFactory.createPetalGradientTexture('#fbbf24', '#ffffff', '#d97706');
+const tulipPetalTex = TextureFactory.createPetalGradientTexture('#fbbf24', '#fef08a', '#d97706');
 const leafTex = TextureFactory.createLeafTexture();
 
 /**
@@ -123,7 +123,7 @@ export class FlowerGenerator {
     const centerGeo = new THREE.CylinderGeometry(0.7, 0.6, 0.2, 32);
     const centerMat = new THREE.MeshStandardMaterial({
       map: sunflowerCenterTex,
-      roughness: 0.8,
+      roughness: 0.7,
       metalness: 0.1
     });
     const centerMesh = new THREE.Mesh(centerGeo, centerMat);
@@ -145,8 +145,9 @@ export class FlowerGenerator {
     petalGeo.center();
 
     const petalMat = new THREE.MeshStandardMaterial({
+      color: 0xffd000,
       map: sunflowerPetalTex,
-      roughness: 0.3,
+      roughness: 0.35,
       metalness: 0.05,
       side: THREE.DoubleSide
     });
@@ -210,6 +211,7 @@ export class FlowerGenerator {
     group.name = 'rose';
 
     const roseMat = new THREE.MeshStandardMaterial({
+      color: 0xffd700,
       map: rosePetalTex,
       roughness: 0.35,
       metalness: 0.05,
@@ -280,8 +282,9 @@ export class FlowerGenerator {
     group.name = 'tulip';
 
     const tulipMat = new THREE.MeshStandardMaterial({
+      color: 0xffc800,
       map: tulipPetalTex,
-      roughness: 0.25,
+      roughness: 0.3,
       metalness: 0.05,
       side: THREE.DoubleSide
     });

@@ -103,12 +103,20 @@ html, body {
   align-self: center;
   pointer-events: none;
   font-size: 0.85rem;
-  color: rgba(254, 248, 238, 0.65);
-  background: rgba(0, 0, 0, 0.25);
-  padding: 6px 14px;
+  color: rgba(254, 248, 238, 0.9);
+  background: rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(251, 191, 36, 0.3);
+  padding: 6px 16px;
   border-radius: 20px;
   margin-bottom: 10px;
-  backdrop-filter: blur(4px);
+  backdrop-filter: blur(6px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.interaction-hint.hidden {
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
 }
 
 /* --- BARRA DE HERRAMIENTAS INFERIOR --- */

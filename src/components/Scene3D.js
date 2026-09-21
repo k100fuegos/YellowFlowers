@@ -30,37 +30,53 @@ export class Scene3D {
     this.renderer.shadowMap.enabled = true;
     this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    this.renderer.toneMappingExposure = 1.15;
+    this.renderer.toneMappingExposure = 1.25;
 
-    // Posición inicial de cámara ajustada para celular y PC
-    const isMobile = window.innerWidth < 768;
-    this.camera.position.set(0, 0.5, isMobile ? 6.5 : 5.2);
-    this.camera.lookAt(0, 0, 0);
+    this.updateCameraDistance();
+  }
+
+  updateCameraDistance() {
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    const aspect = width / height;
+
+    // Ajuste dinámico de distancia de cámara según el aspect ratio de pantalla
+    // En celulares (aspect < 0.75), la cámara retrocede para encuadrar todo el ramo sin cortes
+    if (aspect < 0.6) {
+      this.camera.position.set(0, 0.1, 11.2);
+    } else if (aspect < 0.8) {
+      this.camera.position.set(0, 0.1, 9.2);
+    } else if (aspect < 1.1) {
+      this.camera.position.set(0, 0.1, 7.8);
+    } else {
+      this.camera.position.set(0, 0.1, 6.2);
+    }
+    this.camera.lookAt(0, -0.2, 0);
   }
 
   initLights() {
-    // 1. Luz Hemisférica (Cielo azul suave y tierra cálida)
-    const hemiLight = new THREE.HemisphereLight(0xfffbeb, 0x451a03, 0.85);
+    // 1. Luz Hemisférica (Cielo dorado y tierra cálida)
+    const hemiLight = new THREE.HemisphereLight(0xfffbeb, 0x451a03, 0.95);
     this.scene.add(hemiLight);
 
     // 2. Luz Principal (Golden Hour Sun)
-    const mainLight = new THREE.DirectionalLight(0xfff7ed, 2.2);
+    const mainLight = new THREE.DirectionalLight(0xfff7ed, 2.5);
     mainLight.position.set(4, 6, 5);
     mainLight.castShadow = true;
     mainLight.shadow.mapSize.width = 1024;
     mainLight.shadow.mapSize.height = 1024;
     mainLight.shadow.camera.near = 0.5;
-    mainLight.shadow.camera.far = 15;
+    mainLight.shadow.camera.far = 20;
     mainLight.shadow.bias = -0.0005;
     this.scene.add(mainLight);
 
     // 3. Luz de Relleno Cálida
-    const fillLight = new THREE.DirectionalLight(0xfbbf24, 1.0);
+    const fillLight = new THREE.DirectionalLight(0xfbbf24, 1.2);
     fillLight.position.set(-4, 2, -3);
     this.scene.add(fillLight);
 
     // 4. Luz Trasera (Rim light) para resaltar contornos de pétalos
-    const rimLight = new THREE.PointLight(0xf59e0b, 1.8, 10);
+    const rimLight = new THREE.PointLight(0xf59e0b, 2.0, 12);
     rimLight.position.set(0, 3, -4);
     this.scene.add(rimLight);
   }
@@ -69,10 +85,9 @@ export class Scene3D {
     window.addEventListener('resize', () => {
       const width = window.innerWidth;
       const height = window.innerHeight;
-      const isMobile = width < 768;
 
       this.camera.aspect = width / height;
-      this.camera.position.z = isMobile ? 6.5 : 5.2;
+      this.updateCameraDistance();
       this.camera.updateProjectionMatrix();
 
       this.renderer.setSize(width, height);

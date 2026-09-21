@@ -14,7 +14,7 @@ export class GestureControls {
     this.targetRotation = { x: 0, y: 0 };
     this.currentRotation = { x: 0, y: 0 };
 
-    // Pinch-to-zoom táctil
+    // Pinch-to-zoom táctil adaptativo
     this.touchStartDist = 0;
     this.targetZoom = camera.position.z;
 
@@ -24,18 +24,33 @@ export class GestureControls {
     this.touchStartTime = 0;
     this.touchStartPos = { x: 0, y: 0 };
 
+    this.hasHiddenHint = false;
+
     this.initEvents();
+  }
+
+  hideHint() {
+    if (this.hasHiddenHint) return;
+    this.hasHiddenHint = true;
+    const hint = document.getElementById('interaction-hint');
+    if (hint) {
+      hint.classList.add('hidden');
+    }
   }
 
   initEvents() {
     // --- EVENTOS DE RATÓN (PC) ---
-    this.domElement.addEventListener('mousedown', (e) => this.onPointerDown(e.clientX, e.clientY));
+    this.domElement.addEventListener('mousedown', (e) => {
+      this.hideHint();
+      this.onPointerDown(e.clientX, e.clientY);
+    });
     window.addEventListener('mousemove', (e) => this.onPointerMove(e.clientX, e.clientY));
     window.addEventListener('mouseup', (e) => this.onPointerUp(e.clientX, e.clientY));
     this.domElement.addEventListener('wheel', (e) => this.onWheel(e), { passive: false });
 
     // --- EVENTOS TÁCTILES (MÓVIL) ---
     this.domElement.addEventListener('touchstart', (e) => {
+      this.hideHint();
       if (e.touches.length === 1) {
         this.onPointerDown(e.touches[0].clientX, e.touches[0].clientY);
       } else if (e.touches.length === 2) {
@@ -54,8 +69,8 @@ export class GestureControls {
           e.touches[0].clientX - e.touches[1].clientX,
           e.touches[0].clientY - e.touches[1].clientY
         );
-        const delta = (this.touchStartDist - dist) * 0.01;
-        this.targetZoom = THREE.MathUtils.clamp(this.targetZoom + delta, 3.5, 8.5);
+        const delta = (this.touchStartDist - dist) * 0.015;
+        this.targetZoom = THREE.MathUtils.clamp(this.targetZoom + delta, 4.0, 16.0);
         this.touchStartDist = dist;
       }
     }, { passive: true });
@@ -116,7 +131,8 @@ export class GestureControls {
 
   onWheel(e) {
     e.preventDefault();
-    this.targetZoom = THREE.MathUtils.clamp(this.targetZoom + e.deltaY * 0.005, 3.5, 8.5);
+    this.hideHint();
+    this.targetZoom = THREE.MathUtils.clamp(this.targetZoom + e.deltaY * 0.005, 4.0, 16.0);
   }
 
   /**

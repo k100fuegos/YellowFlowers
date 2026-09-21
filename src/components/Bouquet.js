@@ -63,8 +63,13 @@ export class Bouquet {
       this.group.add(flowerMesh);
     });
 
-    // Inclinación inicial estética del ramo completo
-    this.group.position.set(0, -0.5, 0);
+    // Inclinación y posición inicial estética del ramo completo
+    const isMobile = window.innerWidth < 600;
+    this.group.position.set(0, isMobile ? -0.9 : -0.6, 0);
+
+    if (isMobile) {
+      this.group.scale.set(0.82, 0.82, 0.82);
+    }
   }
 
   /**
