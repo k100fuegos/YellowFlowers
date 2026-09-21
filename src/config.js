@@ -1,6 +1,5 @@
 /**
  * 🌻 CONFIGURACIÓN DEL PROYECTO Y MENSAJE DEDICATORIA 🌻
- * Puedes modificar libremente los textos de abajo para personalizar tu mensaje.
  */
 
 export const DEDICATION_CONFIG = {
@@ -10,19 +9,14 @@ export const DEDICATION_CONFIG = {
   // Subtítulo superior
   subtitle: "Un detalle especial lleno de luz y cariño",
 
-  // Mensaje principal de la carta (puedes usar Saltos de línea con \n o texto largo)
-  message: `Querida persona especial,
-
-Te regalo este ramo de flores amarillas 3D que nunca se marchitarán. 
-Que cada girasol y rosa ilumine tus días con alegría, abundancia, buena energía y todo el cariño del mundo. 
-
-Gracias por brindar siempre tu sonrisa y llenar de luz la vida de quienes te rodean. 💛`,
+  // Mensaje principal de la carta
+  message: `Para mi niña, te regalo este pequeño ramito que nunca se te va a marchitar y lo podrás ver cuando quieras. Que cada girasol y rosa represente la forma en la que me alegras el día y el cariño que me das. Gracias por estar ahí siempre y darme tu apoyo incondicional. <3`,
 
   // Frase de despedida o firma
-  signature: "Con todo mi cariño y admiración,",
+  signature: "Con todo mi cariño,",
 
-  // Tu nombre o remitente (¡Edítame aquí!)
-  sender: "Tu Nombre Aquí ✨",
+  // Remitente / De parte de
+  sender: "Cienfuegos para mailov Margaret",
 
   // Fecha o dedicatoria corta inferior
   date: "21 de Septiembre",

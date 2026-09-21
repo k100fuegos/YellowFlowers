@@ -4,8 +4,8 @@
   --glow-yellow: #fef08a;
   --deep-bg-1: #0a0814;
   --deep-bg-2: #1c152d;
-  --glass-bg: rgba(26, 21, 40, 0.65);
-  --glass-border: rgba(251, 191, 36, 0.35);
+  --glass-bg: rgba(26, 21, 40, 0.75);
+  --glass-border: rgba(251, 191, 36, 0.4);
   --text-light: #fef8ee;
 }
 
@@ -21,6 +21,7 @@
 html, body {
   width: 100%;
   height: 100%;
+  height: 100dvh;
   overflow: hidden;
   background: radial-gradient(circle at 50% 30%, var(--deep-bg-2) 0%, var(--deep-bg-1) 100%);
   font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -34,6 +35,7 @@ html, body {
   left: 0;
   width: 100vw;
   height: 100vh;
+  height: 100dvh;
   z-index: 1;
   cursor: grab;
 }
@@ -48,44 +50,48 @@ html, body {
   left: 0;
   width: 100vw;
   height: 100vh;
+  height: 100dvh;
   z-index: 2;
   pointer-events: none;
 }
 
-/* --- UI OVERLAY LAYER --- */
+/* --- UI OVERLAY LAYER (ADAPTADO A NAVEGADORES MÓVILES) --- */
 .ui-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
+  height: 100dvh;
   z-index: 10;
   pointer-events: none;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 20px;
+  align-items: center;
+  padding: 16px;
+  padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px));
 }
 
 /* --- HEADER BADGE --- */
 .header-badge {
-  align-self: center;
   pointer-events: auto;
   background: var(--glass-bg);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--glass-border);
-  padding: 10px 24px;
+  padding: 8px 20px;
   border-radius: 50px;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37), 0 0 15px rgba(245, 158, 11, 0.2);
   animation: floatHeader 4s ease-in-out infinite;
+  margin-top: calc(4px + env(safe-area-inset-top, 0px));
 }
 
 .header-badge h1 {
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   font-weight: 600;
   letter-spacing: 0.5px;
   background: linear-gradient(135deg, #ffffff 0%, var(--glow-yellow) 100%);
@@ -94,23 +100,24 @@ html, body {
 }
 
 .header-icon {
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   animation: pulseGlow 2s ease-in-out infinite alternate;
 }
 
 /* --- INSTRUCCIONES GUÍA MÓVIL --- */
 .interaction-hint {
-  align-self: center;
   pointer-events: none;
   font-size: 0.85rem;
-  color: rgba(254, 248, 238, 0.9);
-  background: rgba(0, 0, 0, 0.45);
-  border: 1px solid rgba(251, 191, 36, 0.3);
+  color: rgba(254, 248, 238, 0.95);
+  background: rgba(0, 0, 0, 0.55);
+  border: 1px solid rgba(251, 191, 36, 0.4);
   padding: 6px 16px;
   border-radius: 20px;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
   backdrop-filter: blur(6px);
   transition: opacity 0.5s ease, transform 0.5s ease;
+  text-align: center;
+  max-width: 90vw;
 }
 
 .interaction-hint.hidden {
@@ -121,33 +128,38 @@ html, body {
 
 /* --- BARRA DE HERRAMIENTAS INFERIOR --- */
 .toolbar {
-  align-self: center;
   pointer-events: auto;
   display: flex;
-  gap: 12px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
   background: var(--glass-bg);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--glass-border);
-  padding: 10px 16px;
+  padding: 8px 12px;
   border-radius: 30px;
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5), 0 0 20px rgba(251, 191, 36, 0.15);
-  max-width: 95vw;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6), 0 0 25px rgba(251, 191, 36, 0.25);
+  width: auto;
+  max-width: 96vw;
+  margin-bottom: calc(6px + env(safe-area-inset-bottom, 0px));
 }
 
 .btn-action {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   color: var(--text-light);
-  padding: 10px 18px;
+  padding: 8px 14px;
   border-radius: 20px;
   font-family: inherit;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   font-weight: 600;
   display: flex;
   align-items: center;
-  gap: 8px;
+  justify-content: center;
+  gap: 6px;
   cursor: pointer;
+  white-space: nowrap;
   transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
@@ -156,7 +168,7 @@ html, body {
   color: #1a152d;
   border-color: var(--glow-yellow);
   box-shadow: 0 0 18px rgba(251, 191, 36, 0.6);
-  transform: translateY(-3px) scale(1.04);
+  transform: translateY(-2px) scale(1.03);
 }
 
 .btn-action.active {
@@ -171,14 +183,15 @@ html, body {
   left: 0;
   width: 100vw;
   height: 100vh;
+  height: 100dvh;
   z-index: 100;
-  background: rgba(8, 6, 16, 0.75);
+  background: rgba(8, 6, 16, 0.8);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  padding: 16px;
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.35s ease;
@@ -190,15 +203,15 @@ html, body {
 }
 
 .glass-card {
-  background: linear-gradient(145deg, rgba(30, 24, 48, 0.85) 0%, rgba(18, 14, 30, 0.92) 100%);
+  background: linear-gradient(145deg, rgba(30, 24, 48, 0.92) 0%, rgba(18, 14, 30, 0.96) 100%);
   border: 1.5px solid var(--glass-border);
   border-radius: 24px;
-  padding: 32px 28px;
+  padding: 28px 24px;
   width: 100%;
   max-width: 480px;
   max-height: 85vh;
   overflow-y: auto;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(245, 158, 11, 0.25);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 30px rgba(245, 158, 11, 0.3);
   position: relative;
   color: #fef8ee;
 }
@@ -213,15 +226,15 @@ html, body {
 
 .btn-close {
   position: absolute;
-  top: 16px;
-  right: 18px;
-  background: rgba(255, 255, 255, 0.1);
+  top: 14px;
+  right: 16px;
+  background: rgba(255, 255, 255, 0.12);
   border: none;
   color: var(--text-light);
-  width: 34px;
-  height: 34px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -230,24 +243,24 @@ html, body {
 }
 
 .btn-close:hover {
-  background: rgba(245, 158, 11, 0.3);
+  background: rgba(245, 158, 11, 0.4);
 }
 
 .card-header {
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 18px;
 }
 
 .card-subtitle {
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   color: var(--light-gold);
   text-transform: uppercase;
   letter-spacing: 1.5px;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
 }
 
 .card-title {
-  font-size: 1.6rem;
+  font-size: 1.5rem;
   font-weight: 700;
   background: linear-gradient(135deg, #ffffff 0%, var(--glow-yellow) 100%);
   -webkit-background-clip: text;
@@ -255,45 +268,45 @@ html, body {
 }
 
 .card-body {
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 }
 
 .card-message {
   font-size: 1.05rem;
   line-height: 1.65;
-  color: rgba(254, 248, 238, 0.92);
+  color: rgba(254, 248, 238, 0.95);
   white-space: pre-line;
 }
 
 .card-footer {
-  border-top: 1px solid rgba(251, 191, 36, 0.2);
-  padding-top: 16px;
+  border-top: 1px solid rgba(251, 191, 36, 0.25);
+  padding-top: 14px;
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
 }
 
 .card-signature {
-  font-size: 0.9rem;
-  color: rgba(254, 248, 238, 0.7);
+  font-size: 0.85rem;
+  color: rgba(254, 248, 238, 0.75);
 }
 
 .card-sender {
   font-family: 'Great Vibes', cursive;
-  font-size: 2.2rem;
+  font-size: 2.1rem;
   color: var(--glow-yellow);
   text-shadow: 0 0 10px rgba(251, 191, 36, 0.4);
 }
 
 .card-date {
-  font-size: 0.8rem;
-  color: rgba(251, 191, 36, 0.8);
+  font-size: 0.78rem;
+  color: rgba(251, 191, 36, 0.85);
 }
 
 /* --- ANIMACIONES --- */
 @keyframes floatHeader {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
+  50% { transform: translateY(-5px); }
 }
 
 @keyframes pulseGlow {
@@ -301,29 +314,40 @@ html, body {
   to { transform: scale(1.15); filter: drop-shadow(0 0 10px var(--glow-yellow)); }
 }
 
-/* --- ADAPTACIÓN RESPONSIVA MÓVIL --- */
-@media (max-width: 600px) {
+/* --- ADAPTACIÓN ULTRA-RESPONSIVA MÓVIL --- */
+@media (max-width: 500px) {
   .ui-overlay {
-    padding: 12px;
+    padding: 10px;
+    padding-bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+  }
+  .header-badge {
+    padding: 6px 16px;
   }
   .header-badge h1 {
-    font-size: 0.95rem;
+    font-size: 0.9rem;
   }
   .toolbar {
-    gap: 8px;
-    padding: 8px 12px;
+    gap: 4px;
+    padding: 6px 8px;
+    width: 98vw;
+    justify-content: space-evenly;
   }
   .btn-action {
-    padding: 8px 12px;
-    font-size: 0.8rem;
+    padding: 7px 9px;
+    font-size: 0.76rem;
+    gap: 4px;
+    border-radius: 16px;
   }
   .glass-card {
-    padding: 24px 20px;
+    padding: 22px 18px;
   }
   .card-title {
-    font-size: 1.35rem;
+    font-size: 1.3rem;
   }
   .card-message {
     font-size: 0.95rem;
+  }
+  .card-sender {
+    font-size: 1.8rem;
   }
 }
